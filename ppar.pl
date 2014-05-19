@@ -6,6 +6,12 @@ use strict;
 #    *hands you written directions to an apple in the fridge* 
 #    that's a hash reference.
 
+# Define 
+my $inputkey;
+my $key;
+my $inputvalue;
+my $value;
+
 
 # Step 1 of 3: Initialize the hash array 
 my %hash = (
@@ -108,18 +114,38 @@ my %hash = (
 
 
 # Step 2 of 3: Prompt the user to enter a key and corresponding value 
-# (do this in a FOR-loop; hit Ctrl-C to break out of loop)
+# (do this in an infinite loop; type 'quit' to get out of loop)
 while (1) {
     print 'Enter key and value pair (separated by a space); enter \'quit\' to exit) =>';
     print "\n";
     my $str = <STDIN>;
     chomp $str;
-    my ( $key, $value ) = split / /, $str;
-    if ($key eq 'quit') {
+    ( $inputkey, $inputvalue ) = split / /, $str;
+    if ($inputkey eq 'quit') {
         last;
     }
-    $hash{ $key } = $value;
-}
+
+# Error checking.  Make sure the user-input key (inputkey) 
+# matches parameter keys in the hash function
+    my $match = 0; # this variable flag tracks the matching status
+                   # 0 == no match ; 1 == match 
+    while ( ($key, $value) = each(%hash) ) {
+# ##        print '99Hash funct key: ', $key, "\n";
+# ##        print '99Inpu funct key: ', $inputkey, "\n";
+#       if ( $inputkey =~ $key  ) { # NO!! This does not do an exact match.
+        if ( $inputkey =~ /^$key$/ ) {
+# ##            print "THERE IS A MATCH.\n";
+# ##            print 'Hash funct key: ', $key, "\n";
+            $hash{ $inputkey } = $inputvalue;
+            $match = 1; 
+        }
+    }
+    if ( $match == 0 ) {
+        print "No match found for input key.\n";
+        print 'User input key: ', $inputkey, "\n";
+    }
+} # end of infinite loop
+
 print 'done';
 
 
