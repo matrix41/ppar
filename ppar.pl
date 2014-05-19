@@ -1,11 +1,6 @@
 #!/usr/bin/perl -w
 use strict;
 
-# Q. What exactly is a hash and a hash reference?  
-# A. *hands you an apple* pretend that's a hash. 
-#    *hands you written directions to an apple in the fridge* 
-#    that's a hash reference.
-
 # Define 
 my $inputkey;
 my $key;
@@ -114,7 +109,7 @@ my %hash = (
 
 
 # Step 2 of 3: Prompt the user to enter a key and corresponding value 
-# (do this in an infinite loop; type 'quit' to get out of loop)
+# (do this in an infinite WHILE-loop; type 'quit' to get out of loop)
 while (1) {
     print 'Enter key and value pair (separated by a space); enter \'quit\' to exit) =>';
     print "\n";
@@ -126,16 +121,13 @@ while (1) {
     }
 
 # Error checking.  Make sure the user-input key (inputkey) 
-# matches parameter keys in the hash function
+# matches parameter keys in the hash function.  Use WHILE-loop 
+# to iterate through the entire hash function. 
     my $match = 0; # this variable flag tracks the matching status
                    # 0 == no match ; 1 == match 
     while ( ($key, $value) = each(%hash) ) {
-# ##        print '99Hash funct key: ', $key, "\n";
-# ##        print '99Inpu funct key: ', $inputkey, "\n";
 #       if ( $inputkey =~ $key  ) { # NO!! This does not do an exact match.
         if ( $inputkey =~ /^$key$/ ) {
-# ##            print "THERE IS A MATCH.\n";
-# ##            print 'Hash funct key: ', $key, "\n";
             $hash{ $inputkey } = $inputvalue;
             $match = 1; 
         }
@@ -144,18 +136,15 @@ while (1) {
         print "No match found for input key.\n";
         print 'User input key: ', $inputkey, "\n";
     }
-} # end of infinite loop
-
-print 'done';
+} # end of infinite outer WHILE-loop
 
 
 # Step 3 of 3: Print the hash array out to a file in the correct format 
+print "EDMT|planet|<replace with OBJECTID>|add|";
 while ( my ($key, $value) = each(%hash) ) {
-#    print "$key => $value\n"; # this works. 
     print "$key $value|";
 }
 print "\n"; # need to use this so the command prompt displays correctly 
-
 
 exit 0
 
